@@ -25,11 +25,14 @@ This is a unofficial paymaya node sdk that allows existing nodejs app to accept 
           }
     })
 
-
 ## License
 
 MIT
 
 ## Release History
 
+<<<<<<< HEAD
 * 1.0.0 - Initial release
+=======
+* 1.0.0 - Initial release
+>>>>>>> 0d47fc9c1c83125ce468ce55f6b854339346afe5
