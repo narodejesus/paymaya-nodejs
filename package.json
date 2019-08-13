@@ -1,0 +1,26 @@
+{
+  "name": "paymaya-nodejs",
+  "version": "0.0.1",
+  "description": "unofficial paymaya vault sdk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/narodejesus/paymaya-nodejs.git"
+  },
+  "keywords": [
+    "paymaya",
+    "nodejs"
+  ],
+  "author": "onardejesus",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/narodejesus/paymaya-nodejs/issues"
+  },
+  "homepage": "https://github.com/narodejesus/paymaya-nodejs#readme",
+  "dependencies": {
+    "request-promise": "^4.2.4"
+  }
+}
