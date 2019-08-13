@@ -20,7 +20,8 @@ import {
     voidPayment,
 } from './libs'
 
-const {PAYMAYA_SANDBOX} = process.env
+const PAYMAYA_SANDBOX_URL = 'https://pg-sandbox.paymaya.com'
+const PAYMAYA_URL = 'https://pg.paymaya.com'
 
 type Config = {
     publicKey: string,
@@ -72,7 +73,7 @@ export default class PaymayaNode {
             Authorization: `Basic ${secretKey}`,
         }
 
-        this.endpoint = isSandbox ? PAYMAYA_SANDBOX : PAYMAYA_SANDBOX
+        this.endpoint = isSandbox ? PAYMAYA_SANDBOX_URL : PAYMAYA_URL
         this.initializeSDK()
     }
 
