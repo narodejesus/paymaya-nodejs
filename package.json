@@ -1,6 +1,6 @@
 {
   "name": "paymaya-nodejs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "unofficial paymaya vault sdk",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/narodejesus/paymaya-nodejs#readme",
   "dependencies": {
-    "request-promise": "^4.2.4"
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
   }
 }

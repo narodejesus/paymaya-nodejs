@@ -1,6 +1,6 @@
 /* @flow */
 
-import requestPromise from 'request-promise'
+import requestPromise from 'request-promise-native'
 
 const PAYMENT_TOKEN_URL = '/payments/v1/payment-tokens'
 

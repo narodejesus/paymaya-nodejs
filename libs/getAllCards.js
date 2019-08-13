@@ -1,6 +1,6 @@
 /* @flow */
 
-import requestPromise from 'request-promise'
+import requestPromise from 'request-promise-native'
 
 type Config = {
     headers: {
