@@ -34,7 +34,6 @@ export type Response = {
 }
 
 export default ({headers, endpoint}: Config) => (card: Card): Promise<Response> => {
-    console.log(`${endpoint}${PAYMENT_TOKEN_URL}`)
     const options = {
         method: 'POST',
         uri: `${endpoint}${PAYMENT_TOKEN_URL}`,

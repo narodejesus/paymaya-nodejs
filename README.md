@@ -1,6 +1,6 @@
 # paymaya-nodejs
 
-This is a unofficial paymaya node sdk that allows existing nodejs app to accept payments using the existing paymaya endpoints which supports (MasterCard and Visa enabled card (credit, debit, or prepaid)
+This is a unofficial paymaya node sdk that allows existing nodejs app to accept payments using the existing paymaya endpoints which supports (MasterCard and Visa enabled card (credit, debit, or prepaid). this repo currently contains Paymaya vault endpoints
 )
 ## Installation
 
@@ -24,6 +24,10 @@ This is a unofficial paymaya node sdk that allows existing nodejs app to accept 
                 "cvc": "111"
           }
     })
+
+## TODO
+ 1. Webhooks and subscription.
+
 
 ## License
 
