@@ -1,7 +1,5 @@
 /* @flow */
 
-import requestPromise from 'request-promise-native'
-
 const PAYMENT_TOKEN_URL = '/payments/v1/payment-tokens'
 
 type Card = {
@@ -9,13 +7,6 @@ type Card = {
     expMonth: string,
     expYear: string,
     cvc: string,
-}
-
-type Config = {
-    headers: {
-        [configName: string]: string,
-    },
-    endpoint: string,
 }
 
 export type Response = {
@@ -33,16 +24,14 @@ export type Response = {
     issuer: string,
 }
 
-export default ({headers, endpoint}: Config) => (card: Card): Promise<Response> => {
+export default (client: any) => (card: Card): Promise<Response> => {
     const options = {
         method: 'POST',
-        uri: `${endpoint}${PAYMENT_TOKEN_URL}`,
-        body: {
+        url: PAYMENT_TOKEN_URL,
+        data: {
             card,
         },
-        headers,
-        json: true,
     }
 
-    return requestPromise(options)
+    return client.request(options)
 }

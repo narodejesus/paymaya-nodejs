@@ -1,14 +1,5 @@
 /* @flow */
 
-import requestPromise from 'request-promise-native'
-
-type Config = {
-    headers: {
-        [configName: string]: string,
-    },
-    endpoint: string,
-}
-
 type Response = {
     id: string,
     payment: string,
@@ -18,18 +9,16 @@ type Response = {
     updatedAt: string,
 }
 
-export default ({headers, endpoint}: Config) => (paymentId: string, reason: string): Promise<Response> => {
+export default (client: any) => (paymentId: string, reason: string): Promise<Response> => {
     const ROUTE = `/payments/v1/payments/${paymentId}`
 
     const options = {
         method: 'DELETE',
-        uri: `${endpoint}${ROUTE}`,
-        body: {
+        url: ROUTE,
+        data: {
             reason,
         },
-        headers,
-        json: true,
     }
 
-    return requestPromise(options)
+    return client.request(options)
 }

@@ -1,14 +1,5 @@
 /* @flow */
 
-import requestPromise from 'request-promise-native'
-
-type Config = {
-    headers: {
-        [configName: string]: string,
-    },
-    endpoint: string,
-}
-
 type Response = {
     id: string,
     isPaid: boolean,
@@ -22,15 +13,13 @@ type Response = {
     paymentTokenId: string,
 }
 
-export default ({headers, endpoint}: Config) => (paymentId: string, refNumber?: string): Promise<Response> => {
+export default (client: any) => (paymentId: string, refNumber?: string): Promise<Response> => {
     const ROUTE = refNumber ? `/payments/v1/payment-rrns/${refNumber}` : `/payments/v1/payments/${paymentId}`
 
     const options = {
         method: 'GET',
-        uri: `${endpoint}${ROUTE}`,
-        headers,
-        json: true,
+        url: ROUTE,
     }
 
-    return requestPromise(options)
+    return client.request(options)
 }

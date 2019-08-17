@@ -3,22 +3,23 @@
 import {
     createCustomer,
     type CreateCustomerResponse,
-    createPayment,
-    createPaymentToken,
+    // createPayment,
+    // createPaymentToken,
     type CustomerInformation,
-    deleteCard,
-    deleteCustomer,
-    getAllCards,
-    getCardDetails,
-    getCustomerDetails,
-    getPayment,
-    updateCard,
-    updateCustomerDetails,
+    // deleteCard,
+    // deleteCustomer,
+    // getAllCards,
+    // getCardDetails,
+    // getCustomerDetails,
+    // getPayment,
+    // updateCard,
+    // updateCustomerDetails,
     vaultCard,
     type VaultCardInput,
     type VaultCardResponse,
-    voidPayment,
+    // voidPayment,
 } from './libs'
+import axios from 'axios'
 
 const PAYMAYA_SANDBOX_URL = 'https://pg-sandbox.paymaya.com'
 const PAYMAYA_URL = 'https://pg.paymaya.com'
@@ -49,13 +50,9 @@ export default class PaymayaNode {
     vaultCard: (customerId: string, token: VaultCardInput) => VaultCardResponse
     voidPayment: Function
 
-    publicHeaders: {
-        [configName: string]: string,
-    }
+    privateClient: axios
 
-    privateHeaders: {
-        [configName: string]: string,
-    }
+    publicClient: axios
 
     constructor({publicKey, secretKey, isSandbox}: Config) {
         if (!publicKey && !secretKey) {
@@ -64,32 +61,55 @@ export default class PaymayaNode {
 
         this.secretKey = secretKey
         this.publicKey = publicKey
-        this.publicHeaders = {
-            'Content-Type': 'application/json',
-            Authorization: `Basic ${publicKey}`,
-        }
-        this.privateHeaders = {
-            'Content-Type': 'application/json',
-            Authorization: `Basic ${secretKey}`,
-        }
 
-        this.endpoint = isSandbox ? PAYMAYA_SANDBOX_URL : PAYMAYA_URL
+        const baseURL = isSandbox ? PAYMAYA_SANDBOX_URL : PAYMAYA_URL
+
+        this.privateClient = axios.create({
+            baseURL,
+            timeout: 1000,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Basic ${secretKey}`,
+            },
+        })
+
+        this.privateClient.interceptors.response.use(this.modifySuccessInterceptor, this.modifyErrorInterceptor)
+
+        this.publicClient = axios.create({
+            baseURL,
+            timeout: 1000,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Basic ${publicKey}`,
+            },
+        })
+
+        this.publicClient.interceptors.response.use(this.modifySuccessInterceptor, this.modifyErrorInterceptor)
+
         this.initializeSDK()
     }
 
+    modifySuccessInterceptor(response: {data: {}}) {
+        return response.data || {}
+    }
+
+    modifyErrorInterceptor(error: any) {
+        return Promise.reject(error)
+    }
+
     initializeSDK() {
-        this.createPaymentToken = createPaymentToken({headers: this.publicHeaders, endpoint: this.endpoint})
-        this.createCustomer = createCustomer({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.createPayment = createPayment({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.deleteCard = deleteCard({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.deleteCustomer = deleteCustomer({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.getAllCards = getAllCards({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.getCardDetails = getCardDetails({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.getCustomerDetails = getCustomerDetails({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.getPayment = getPayment({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.vaultCard = vaultCard({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.voidPayment = voidPayment({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.updateCard = updateCard({headers: this.privateHeaders, endpoint: this.endpoint})
-        this.updateCustomerDetails = updateCustomerDetails({headers: this.privateHeaders, endpoint: this.endpoint})
+        // this.createPaymentToken = createPaymentToken(this.publicClient)
+        this.createCustomer = createCustomer(this.privateClient)
+        // this.createPayment = createPayment(this.privateClient)
+        // this.deleteCard = deleteCard(this.privateClient)
+        // this.deleteCustomer = deleteCustomer(this.privateClient)
+        // this.getAllCards = getAllCards(this.privateClient)
+        // this.getCardDetails = getCardDetails(this.privateClient)
+        // this.getCustomerDetails = getCustomerDetails(this.privateClient)
+        // this.getPayment = getPayment(this.privateClient)
+        this.vaultCard = vaultCard(this.privateClient)
+        // this.voidPayment = voidPayment(this.privateClient)
+        // this.updateCard = updateCard(this.privateClient)
+        // this.updateCustomerDetails = updateCustomerDetails(this.privateClient)
     }
 }

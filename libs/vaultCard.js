@@ -1,14 +1,5 @@
 /* @flow */
 
-import requestPromise from 'request-promise-native'
-
-type Config = {
-    headers: {
-        [configName: string]: string,
-    },
-    endpoint: string,
-}
-
 export type Input = {
     paymentTokenId: string,
     isDefault: boolean,
@@ -31,16 +22,14 @@ export type Response = Promise<{
     id: string,
 }>
 
-export default ({headers, endpoint}: Config) => (customerId: string, cardToken: Input): Response => {
+export default (client: any) => (customerId: string, cardToken: Input): Response => {
     const VAULT_CART_ROUTE = `/payments/v1/customers/${customerId}/cards`
 
     const options = {
         method: 'POST',
-        uri: `${endpoint}${VAULT_CART_ROUTE}`,
-        body: cardToken,
-        headers,
-        json: true,
+        url: VAULT_CART_ROUTE,
+        data: cardToken,
     }
 
-    return requestPromise(options)
+    return client.request(options)
 }

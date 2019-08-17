@@ -1,15 +1,6 @@
 /* @flow */
 
-import requestPromise from 'request-promise-native'
-
 const ROUTE = '/payments/v1/payments'
-
-type Config = {
-    headers: {
-        [configName: string]: string,
-    },
-    endpoint: string,
-}
 
 type Response = {
     id: string,
@@ -58,14 +49,12 @@ type PaymentInformationRequest = {
     },
 }
 
-export default ({headers, endpoint}: Config) => (paymentInformation: PaymentInformationRequest): Promise<Response> => {
+export default (client: any) => (paymentInformation: PaymentInformationRequest): Promise<Response> => {
     const options = {
         method: 'POST',
-        uri: `${endpoint}${ROUTE}`,
-        body: paymentInformation,
-        headers,
-        json: true,
+        url: ROUTE,
+        data: paymentInformation,
     }
 
-    return requestPromise(options)
+    return client.request(options)
 }

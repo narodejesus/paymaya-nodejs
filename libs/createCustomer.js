@@ -1,7 +1,5 @@
 /* @flow */
 
-import requestPromise from 'request-promise-native'
-
 const ROUTE = '/payments/v1/customers'
 
 export type CustomerInformation = {
@@ -23,13 +21,6 @@ export type CustomerInformation = {
         countryCode: string,
     },
     metadata?: {},
-}
-
-type Config = {
-    headers: {
-        [configName: string]: string,
-    },
-    endpoint: string,
 }
 
 export type Response = Promise<{
@@ -55,14 +46,12 @@ export type Response = Promise<{
     updatedAt: string,
 }>
 
-export default ({headers, endpoint}: Config) => (customerInformation: CustomerInformation): Response => {
+export default (client: any) => (customerInformation: CustomerInformation): Response => {
     const options = {
         method: 'POST',
-        uri: `${endpoint}${ROUTE}`,
-        body: customerInformation,
-        headers,
-        json: true,
+        url: ROUTE,
+        data: customerInformation,
     }
 
-    return requestPromise(options)
+    return client.request(options)
 }

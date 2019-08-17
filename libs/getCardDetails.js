@@ -1,14 +1,5 @@
 /* @flow */
 
-import requestPromise from 'request-promise-native'
-
-type Config = {
-    headers: {
-        [configName: string]: string,
-    },
-    endpoint: string,
-}
-
 type Response = {
     state:
         | 'AVAILABLE'
@@ -26,15 +17,13 @@ type Response = {
     updatedAt: string,
 }
 
-export default ({headers, endpoint}: Config) => (customerId: string, cardId: string): Promise<Response> => {
+export default (client: any) => (customerId: string, cardId: string): Promise<Response> => {
     const ROUTE = `/payments/v1/customers/${customerId}/cards/${cardId}`
 
     const options = {
         method: 'GET',
-        uri: `${endpoint}${ROUTE}`,
-        headers,
-        json: true,
+        url: ROUTE,
     }
 
-    return requestPromise(options)
+    return client.request(options)
 }
