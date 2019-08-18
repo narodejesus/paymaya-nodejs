@@ -3,21 +3,21 @@
 import {
     createCustomer,
     type CreateCustomerResponse,
-    // createPayment,
-    // createPaymentToken,
+    createPayment,
+    createPaymentToken,
     type CustomerInformation,
-    // deleteCard,
-    // deleteCustomer,
-    // getAllCards,
-    // getCardDetails,
-    // getCustomerDetails,
-    // getPayment,
-    // updateCard,
-    // updateCustomerDetails,
+    deleteCard,
+    deleteCustomer,
+    getAllCards,
+    getCardDetails,
+    getCustomerDetails,
+    getPayment,
+    updateCard,
+    updateCustomerDetails,
     vaultCard,
     type VaultCardInput,
     type VaultCardResponse,
-    // voidPayment,
+    voidPayment,
 } from './libs'
 import axios from 'axios'
 
@@ -98,18 +98,18 @@ export default class PaymayaNode {
     }
 
     initializeSDK() {
-        // this.createPaymentToken = createPaymentToken(this.publicClient)
+        this.createPaymentToken = createPaymentToken(this.publicClient)
         this.createCustomer = createCustomer(this.privateClient)
-        // this.createPayment = createPayment(this.privateClient)
-        // this.deleteCard = deleteCard(this.privateClient)
-        // this.deleteCustomer = deleteCustomer(this.privateClient)
-        // this.getAllCards = getAllCards(this.privateClient)
-        // this.getCardDetails = getCardDetails(this.privateClient)
-        // this.getCustomerDetails = getCustomerDetails(this.privateClient)
-        // this.getPayment = getPayment(this.privateClient)
+        this.createPayment = createPayment(this.privateClient)
+        this.deleteCard = deleteCard(this.privateClient)
+        this.deleteCustomer = deleteCustomer(this.privateClient)
+        this.getAllCards = getAllCards(this.privateClient)
+        this.getCardDetails = getCardDetails(this.privateClient)
+        this.getCustomerDetails = getCustomerDetails(this.privateClient)
+        this.getPayment = getPayment(this.privateClient)
         this.vaultCard = vaultCard(this.privateClient)
-        // this.voidPayment = voidPayment(this.privateClient)
-        // this.updateCard = updateCard(this.privateClient)
-        // this.updateCustomerDetails = updateCustomerDetails(this.privateClient)
+        this.voidPayment = voidPayment(this.privateClient)
+        this.updateCard = updateCard(this.privateClient)
+        this.updateCustomerDetails = updateCustomerDetails(this.privateClient)
     }
 }

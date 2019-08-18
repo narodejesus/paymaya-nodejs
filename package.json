@@ -1,6 +1,6 @@
 {
   "name": "paymaya-nodejs",
-  "version": "0.0.4",
+  "version": "0.0.3",
   "description": "unofficial paymaya vault sdk",
   "main": "index.js",
   "scripts": {
